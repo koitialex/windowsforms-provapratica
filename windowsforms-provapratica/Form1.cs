@@ -42,7 +42,7 @@ namespace windowsforms_provapratica
             phone = phone.Replace(")", "");
             phone = phone.Replace("-", "");
             novoUsuario.Telefone = phone;
-
+            //verifica se exite o número de telefone    
             if(!Validacao() || !ValidarTelefone())
             {
                 return false;
@@ -53,8 +53,20 @@ namespace windowsforms_provapratica
                 MessageBox.Show("Já existe esse telefone");
                 return false;
             }
+            //verifica se exite o nome
+            bool existeNome = Database.VerificarAlunoExistente(txtNome.Text);
+            if (existeNome)
+            {
+                MessageBox.Show("Já existe esse Nome");
+                return false;
+            }
+            if (existetelefone && existeNome)
+            {
+                MessageBox.Show("Já existem os dois");
+                return false;
+            }
 
-                bool sucesso = Database.SalvarUsuario(novoUsuario);
+            bool sucesso = Database.SalvarUsuario(novoUsuario);
             if (sucesso)
             { 
                 MessageBox.Show("Salvo com sucesso", "resposta",MessageBoxButtons.OK, MessageBoxIcon.Information);

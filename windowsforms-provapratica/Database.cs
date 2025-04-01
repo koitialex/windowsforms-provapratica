@@ -47,8 +47,23 @@ namespace windowsforms_provapratica
                 return true;
             else 
                 return false;  
-            
-           
+
+        }
+        public static bool VerificarAlunoExistente(string nome)
+        {
+            string connectionString = "server=localhost;port=3306;user =root;database=ti113_windowsforms";
+            MySqlConnection conexao = new MySqlConnection(connectionString);
+            conexao.Open();
+
+            string query = "select * from usuarios where Nome = @Nome";
+            MySqlCommand cmd = conexao.CreateCommand();
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@Nome", nome);
+            MySqlDataReader conteudo = cmd.ExecuteReader();
+            if(conteudo.Read())
+                return true;
+            else
+                return false;
         }
         
     }
